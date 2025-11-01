@@ -34,7 +34,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.HP46 }}
         with:
           args: >
-            -Dsonar.projectKey=frontend-project-46
+            -Dsonar.projectKey=LamiIIIa_frontend-project-46
             -Dsonar.organization=lamiiiia
             -Dsonar.host.url=https://sonarcloud.io
 
