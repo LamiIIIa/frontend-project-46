@@ -12,12 +12,12 @@ export default (fp1, fp2) => {
     const has2 = key in f2;
     if (has1 && has2) {
       if (_.isEqual(f1[key], f2[key])) {
-        return `  ${key}: ${f1[key]}`;
+        return `    ${key}: ${f1[key]}`;
       }
-      return [`- ${key}: ${f1[key]}`, `+ ${key}: ${f2[key]}`];
+      return [`  - ${key}: ${f1[key]}`, `  + ${key}: ${f2[key]}`];
     }
-    if (has1) return `- ${key}: ${f1[key]}`;
-    if (has2) return `+ ${key}: ${f2[key]}`;
+    if (has1) return `  - ${key}: ${f1[key]}`;
+    if (has2) return `  + ${key}: ${f2[key]}`;
     return [];
   });
 
