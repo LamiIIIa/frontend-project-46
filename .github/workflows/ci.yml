@@ -30,7 +30,7 @@ jobs:
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         with:
-        projectKey: YOUR_PROJECT_KEY
-        organization: YOUR_ORG
-        token: ${{ secrets.SONAR_TOKEN }}
+        projectKey: frontend-project-46
+        organization: lamiiiia
+        token: ${{ secrets.HP64 }}
 
