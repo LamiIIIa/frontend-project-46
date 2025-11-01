@@ -27,4 +27,10 @@ jobs:
 
       - name: Run tests
         run: npm test
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        with:
+        projectKey: YOUR_PROJECT_KEY
+        organization: YOUR_ORG
+        token: ${{ secrets.SONAR_TOKEN }}
 
