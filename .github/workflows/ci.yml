@@ -2,20 +2,21 @@ name: Node CI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 20
 
@@ -29,7 +30,7 @@ jobs:
         run: npm test
 
       - name: SonarCloud Scan
-        uses: SonarSource/sonarqube-scan-action@v5
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.HP46 }}
         with:
@@ -37,5 +38,5 @@ jobs:
             -Dsonar.projectKey=LamiIIIa_frontend-project-46
             -Dsonar.organization=lamiiiia
             -Dsonar.host.url=https://sonarcloud.io
-
+            ${{ github.event_name == 'pull_request' && '-Dsonar.pullrequest.key=' + github.event.pull_request.number || '' }}
 
