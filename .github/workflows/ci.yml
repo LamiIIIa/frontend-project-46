@@ -27,10 +27,11 @@ jobs:
 
       - name: Run tests
         run: npm test
+
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         with:
-        projectKey: frontend-project-46
-        organization: lamiiiia
-        token: ${{ secrets.HP64 }}
+          projectKey: frontend-project-46
+          organization: lamiiiia
+          token: ${{ secrets.HP64 }}
 
