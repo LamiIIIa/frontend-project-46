@@ -19,3 +19,18 @@ test("gendiff works for flat JSON", () => {
   + verbose: true
 }`);
 });
+
+test("gendiff works for flat YAML", () => {
+  const f1 = path.join(__dirname, "__fixtures__", "file1.yml");
+  const f2 = path.join(__dirname, "__fixtures__", "file2.yml");
+  const diff = genDiff(f1, f2);
+
+  expect(diff).toBe(`{
+  - follow: false
+    host: hexlet.io
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: true
+}`);
+});
