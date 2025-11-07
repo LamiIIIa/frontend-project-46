@@ -2,45 +2,55 @@ import _ from "lodash";
 
 const indentSize = 4;
 
+const getIndent = (depth, replacer = " ") =>
+  replacer.repeat(indentSize * depth - 2);
+const getBracketIndent = (depth) => " ".repeat(indentSize * (depth - 1));
+
 const formatValue = (value, depth) => {
-  if (_.isPlainObject(value)) {
-    const indent = " ".repeat(depth * indentSize);
-    const bracketIndent = " ".repeat((depth - 1) * indentSize);
-    const lines = Object.entries(value).map(
-      ([key, val]) => `${indent}${key}: ${formatValue(val, depth + 1)}`
-    );
-    return ["{", ...lines, `${bracketIndent}}`].join("\n");
+  if (!_.isPlainObject(value)) {
+    return String(value);
   }
-  return String(value);
+
+  const lines = Object.entries(value).map(
+    ([key, val]) =>
+      `${getIndent(depth + 1)}  ${key}: ${formatValue(val, depth + 1)}`
+  );
+
+  return ["{", ...lines, `${getBracketIndent(depth + 1)}}`].join("\n");
 };
 
 const iter = (nodes, depth) => {
-  const indent = " ".repeat(depth * indentSize - 2);
-  const bracketIndent = " ".repeat((depth - 1) * indentSize);
+  const makeLine = (sign, key, value) => {
+    const formattedValue = formatValue(value, depth);
+    return `${getIndent(depth, " ")}${sign} ${key}: ${formattedValue}`;
+  };
 
   const lines = nodes.flatMap((node) => {
     const { key, type } = node;
 
     switch (type) {
       case "nested":
-        return `${indent}  ${key}: ${iter(node.children, depth + 1)}`;
+        return `${getIndent(depth, " ")}  ${key}: ${iter(
+          node.children,
+          depth + 1
+        )}`;
       case "added":
-        return `${indent}+ ${key}: ${formatValue(node.value, depth)}`;
+        return makeLine("+", key, node.value);
       case "removed":
-        return `${indent}- ${key}: ${formatValue(node.value, depth)}`;
+        return makeLine("-", key, node.value);
       case "unchanged":
-        return `${indent}  ${key}: ${formatValue(node.value, depth)}`;
+        return makeLine(" ", key, node.value);
       case "changed":
         return [
-          `${indent}- ${key}: ${formatValue(node.oldValue, depth)}`,
-          `${indent}+ ${key}: ${formatValue(node.newValue, depth)}`,
+          makeLine("-", key, node.oldValue),
+          makeLine("+", key, node.newValue),
         ];
       default:
         throw new Error(`Unknown type: ${type}`);
     }
   });
 
-  return ["{", ...lines, `${bracketIndent}}`].join("\n");
+  return ["{", ...lines, `${getBracketIndent(depth)}}`].join("\n");
 };
 
 const stylish = (diffTree) => iter(diffTree, 1);
