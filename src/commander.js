@@ -9,9 +9,9 @@ program
   .version("0.0.1")
   .argument("<fp1>")
   .argument("<fp2>")
-  .option("-f, -format [type]", "output format")
-  .action((fp1, fp2) => {
-    const diff = genDiff(fp1, fp2);
+  .option("-f, -format [type]", "output format", "stylish")
+  .action((fp1, fp2, style) => {
+    const diff = genDiff(fp1, fp2, style.format);
     console.log(diff);
   });
 
