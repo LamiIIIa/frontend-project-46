@@ -1,6 +1,6 @@
 import parse from "./parsers.js";
 import deepDiff from "./deepDiff.js";
-import stylish from "./formatters/stylish.js";
+import format from "./formatters/index.js";
 
 export default (fp1, fp2, formatName = "stylish") => {
   const f1 = parse(fp1);
@@ -8,9 +8,5 @@ export default (fp1, fp2, formatName = "stylish") => {
 
   const diffTree = deepDiff.deep(f1, f2);
 
-  if (formatName === "stylish") {
-    return stylish(diffTree);
-  }
-
-  throw new Error("Uncorrect format!");
+  return format(diffTree, formatName);
 };
