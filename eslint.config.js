@@ -4,6 +4,9 @@ import { defineConfig } from 'eslint/config'
 import stylistic from '@stylistic/eslint-plugin'
 
 export default defineConfig([
+  {
+    ignores: ['src/__tests__/**'],
+  },
   stylistic.configs.recommended,
   {
     files: ['**/*.{js,mjs,cjs}'],
