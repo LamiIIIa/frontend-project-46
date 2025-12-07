@@ -1,20 +1,11 @@
-import fs from "fs";
-import path from "path";
 import yaml from "js-yaml";
+import path from "path";
 
-export default (filepath) => {
-  const absoluteP = path.resolve(process.cwd(), filepath); //path.resolve составляет путь до файла, process.cwd() указывает на текущую директорию (полный путь)
-  const openFile = fs.readFileSync(absoluteP, "utf-8"); //открывает файл в формате строчки
+export default function parse(data, filename) {
+  const ext = path.extname(filename).toLowerCase();
 
-  const format = path.extname(filepath).toLowerCase();
+  if (ext === ".json") return JSON.parse(data);
+  if (ext === ".yml" || ext === ".yaml") return yaml.load(data);
 
-  if (format === ".json") {
-    return JSON.parse(openFile);
-  }
-
-  if (format === ".yml" || format === ".yaml") {
-    return yaml.load(openFile);
-  }
-
-  throw new Error(`Uncorrect file format: ${format}`);
-};
+  throw new Error(`Unknown format: ${ext}`);
+}
