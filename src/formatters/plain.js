@@ -20,13 +20,13 @@ const plain = (tree) => {
         switch (type) {
           case "added":
             return `Property '${propertyPath}' was added with value: ${stringify(
-              node.value
+              node.value,
             )}`;
           case "removed":
             return `Property '${propertyPath}' was removed`;
           case "changed":
             return `Property '${propertyPath}' was updated. From ${stringify(
-              node.oldValue
+              node.oldValue,
             )} to ${stringify(node.newValue)}`;
           case "nested":
             return iter(node.children, propertyPath);

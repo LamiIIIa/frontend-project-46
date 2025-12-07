@@ -13,7 +13,7 @@ const formatValue = (value, depth) => {
 
   const lines = Object.entries(value).map(
     ([key, val]) =>
-      `${getIndent(depth + 1)}  ${key}: ${formatValue(val, depth + 1)}`
+      `${getIndent(depth + 1)}  ${key}: ${formatValue(val, depth + 1)}`,
   );
 
   return ["{", ...lines, `${getBracketIndent(depth + 1)}}`].join("\n");
@@ -32,7 +32,7 @@ const iter = (nodes, depth) => {
       case "nested":
         return `${getIndent(depth, " ")}  ${key}: ${iter(
           node.children,
-          depth + 1
+          depth + 1,
         )}`;
       case "added":
         return makeLine("+", key, node.value);

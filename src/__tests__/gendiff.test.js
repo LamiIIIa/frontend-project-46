@@ -51,7 +51,7 @@ describe("gendiff for nested structures", () => {
             expect.objectContaining({ key: "group1", type: "nested" }),
             expect.objectContaining({ key: "group2", type: "removed" }),
             expect.objectContaining({ key: "group3", type: "added" }),
-          ])
+          ]),
         );
       });
     });

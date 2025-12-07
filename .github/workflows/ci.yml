@@ -38,5 +38,3 @@ jobs:
             -Dsonar.projectKey=LamiIIIa_frontend-project-46
             -Dsonar.organization=lamiiiia
             -Dsonar.host.url=https://sonarcloud.io
-            
-
